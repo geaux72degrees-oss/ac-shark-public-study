@@ -1,9 +1,11 @@
-# AC SHARK public study website
+# AC SHARK Study — current website
 
-Public GitHub Pages candidate.
+This public site replaces Version 17 as the study website you use now.
+Version 17 files stay in Google Drive as archive. They are not deleted.
+
 Password lock is on the page.
 Personal name and license file number are not in this repo.
-This does not replace Version 17.
+Full textbooks stay in Drive.
 
-After Pages is turned on, the site is:
+After GitHub Pages is on:
 https://geaux72degrees-oss.github.io/ac-shark-public-study/
