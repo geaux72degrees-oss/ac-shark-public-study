@@ -1,88 +1,563 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="theme-color" content="#0f172a">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="AC SHARK">
-<title>AC SHARK Study</title>
-<style>
-:root{--bg:#0b1220;--line:#2a3754;--ink:#eef3ff;--muted:#93a0b8;--orange:#ef7f1a;--blue:#4ea1ff;--green:#34c27a;--red:#ef5b4d;--yellow:#f6c453;--safe-b:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box}html,body{margin:0}body{background:radial-gradient(1200px 500px at 10% -10%,#1c2a4a 0%,var(--bg) 55%);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;min-height:100dvh}a{color:var(--blue)}button{font:inherit;cursor:pointer}
-.app{display:none;max-width:1100px;margin:auto;padding:18px 16px calc(92px + var(--safe-b))}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-.brand{font-weight:900}.brand small{display:block;color:var(--muted);font-size:.7rem;letter-spacing:.14em}
-.nav-desk{display:flex;gap:6px;flex-wrap:wrap}
-.nav-desk button,.tabs button{border:0;background:transparent;color:var(--muted);font-weight:800;padding:10px 12px;border-radius:10px;min-height:44px}
-.nav-desk button.active,.tabs button.active{background:var(--orange);color:#111}
-.card{background:rgba(23,32,51,.92);border:1px solid var(--line);border-radius:18px;padding:20px;margin:0 0 14px}
-h1{font-size:clamp(1.6rem,5vw,2.6rem);margin:0 0 8px}.lead{color:var(--muted)}p,li{line-height:1.5}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:800;min-height:48px;display:inline-flex;align-items:center;text-decoration:none;color:#111}
-.btn.primary{background:var(--orange)}.btn.ghost{background:#22314d;color:var(--ink)}.btn.blue{background:#1d4ed8;color:#fff}
-.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-.metric{background:#10182a;border:1px solid var(--line);border-radius:14px;padding:14px}.metric b{display:block}.metric span{color:var(--muted);font-size:.82rem}
-.badge{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--orange)}
-.view{display:none}.view.on{display:block}
-.formula{display:inline-block;background:#10182a;border:1px dashed var(--orange);border-radius:12px;padding:10px 12px;font:800 1.2rem ui-monospace,monospace}
-.box{background:#10182a;border-left:4px solid var(--blue);border-radius:10px;padding:12px;margin:10px 0}.safe{border-left-color:var(--red)}
-.choice{width:100%;text-align:left;background:#10182a;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:13px;margin:8px 0;min-height:50px}
-.choice.picked{border-color:var(--blue)}.choice.good{border-color:var(--green)}.choice.bad{border-color:var(--red)}
-.tabs{position:fixed;left:0;right:0;bottom:0;display:none;grid-template-columns:repeat(5,1fr);background:#0e1626;border-top:1px solid var(--line);padding:6px 6px var(--safe-b)}
-#gate{min-height:100dvh;display:grid;place-items:center;padding:20px}#gate .card{max-width:440px;width:100%}
-#pw{width:100%;min-height:52px;border-radius:12px;border:1px solid var(--line);background:#10182a;color:var(--ink);padding:12px}
-.err{color:var(--red);font-weight:800;min-height:1.2em}
-.lib{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.clock{font:800 1.4rem ui-monospace,monospace;color:var(--yellow)}
-@media (max-width:860px){.nav-desk{display:none}.tabs{display:grid}}
-@media (min-width:861px){.tabs{display:none}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>AC SHARK Study</title>
+  <meta name="theme-color" content="#ebe4d6" />
+  <meta name="description" content="Texas Environmental Air Class A study: lessons, original practice, and a timed exam lab." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ebe4d6;
+      --ink: #1c1916;
+      --card: #faf7f1;
+      --muted: #e3dcd0;
+      --muted-fg: #6b645b;
+      --accent: #9d4318;
+      --accent-fg: #fff7f0;
+      --success: #2c6b4a;
+      --danger: #a61f1a;
+      --sidebar: #1c1916;
+      --sidebar-fg: #f4efe6;
+      --sidebar-muted: #9c948a;
+      --shadow: 0 0 0 1px rgba(28,25,22,.06), 0 1px 2px -1px rgba(28,25,22,.06), 0 2px 4px 0 rgba(28,25,22,.04);
+      --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      --display: "IBM Plex Serif", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      min-height: 100dvh;
+    }
+    h1, h2, h3 { font-family: var(--display); letter-spacing: -.03em; text-wrap: balance; font-weight: 600; }
+    p { text-wrap: pretty; }
+    button { font-family: inherit; cursor: pointer; }
+    a { color: inherit; }
+    .app { min-height: 100dvh; }
+    @media (min-width: 768px) { .app { display: flex; } }
+    .sidebar {
+      display: none;
+      width: 15rem;
+      background: var(--sidebar);
+      color: var(--sidebar-fg);
+      padding: 1.5rem 1rem;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+    }
+    @media (min-width: 768px) { .sidebar { display: flex; } }
+    .brand { display: flex; gap: .75rem; align-items: center; padding: 0 .5rem; }
+    .mark {
+      width: 2rem; height: 2rem; border-radius: .5rem; background: var(--accent);
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .mark svg { width: 1.25rem; height: 1.25rem; }
+    .nav { margin-top: 2rem; display: flex; flex-direction: column; gap: .25rem; flex: 1; }
+    .nav button {
+      min-height: 2.75rem; border: 0; border-radius: .5rem; padding: 0 .75rem;
+      background: transparent; color: var(--sidebar-muted); text-align: left; font-size: .875rem; font-weight: 500;
+    }
+    .nav button.on { background: rgba(244,239,230,.1); color: var(--sidebar-fg); }
+    .side-meta { padding: 0 .75rem; font-size: .75rem; color: var(--sidebar-muted); }
+    .main-wrap {
+      flex: 1; min-width: 0;
+      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+    }
+    @media (min-width: 768px) { .main-wrap { padding-bottom: 0; } }
+    .topbar {
+      display: flex; gap: .75rem; align-items: center;
+      padding: .75rem 1rem; padding-top: max(.75rem, env(safe-area-inset-top));
+      border-bottom: 1px solid #d5cdc0; background: rgba(235,228,214,.9);
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px);
+    }
+    @media (min-width: 768px) { .topbar { display: none; } }
+    .content { max-width: 56rem; margin: 0 auto; padding: 1.5rem 1rem; }
+    @media (min-width: 768px) { .content { padding: 2rem; } }
+    .card { background: var(--card); border-radius: 1.75rem; padding: 1.25rem; box-shadow: var(--shadow); }
+    @media (min-width: 768px) { .card { padding: 1.5rem; } }
+    .kicker { font-size: .875rem; color: var(--muted-fg); margin: 0; }
+    .page-h { margin: .25rem 0 0; font-size: 1.875rem; }
+    .lead { color: var(--muted-fg); line-height: 1.5; max-width: 40rem; }
+    .row { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .btn {
+      min-height: 2.75rem; border: 0; border-radius: .5rem; padding: 0 1rem;
+      font-size: .875rem; font-weight: 500; background: var(--ink); color: var(--card);
+    }
+    .btn.sec { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+    .btn:disabled { opacity: .5; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (min-width: 768px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+    .stat { background: var(--card); border-radius: 1.25rem; padding: .75rem 1rem; box-shadow: var(--shadow); }
+    .stat p { margin: 0; font-size: .75rem; color: var(--muted-fg); }
+    .stat b { display: block; margin-top: .25rem; font-family: var(--display); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+    .tracks { display: grid; gap: .75rem; }
+    @media (min-width: 640px) { .tracks { grid-template-columns: 1fr 1fr; } }
+    .track {
+      text-align: left; background: var(--card); border: 0; border-radius: 1.75rem;
+      padding: 1.25rem; box-shadow: var(--shadow); font: inherit; color: inherit;
+    }
+    .meter { height: .375rem; background: var(--muted); border-radius: 999px; overflow: hidden; }
+    .meter > i { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+    .split { display: grid; gap: 1rem; }
+    @media (min-width: 768px) { .split { grid-template-columns: 1fr 2fr; align-items: start; } }
+    .lesson-list { max-height: 24rem; overflow: auto; }
+    .lesson-list button {
+      display: block; width: 100%; text-align: left; min-height: 2.5rem;
+      border: 0; border-radius: .5rem; padding: .4rem .5rem; background: transparent; font-size: .875rem;
+    }
+    .lesson-list button.on { background: var(--ink); color: var(--card); }
+    .choice {
+      display: flex; gap: .75rem; align-items: flex-start; width: 100%;
+      min-height: 3rem; text-align: left; border: 0; border-radius: .75rem;
+      padding: .75rem; background: rgba(235,228,214,.8); box-shadow: var(--shadow); font: inherit;
+    }
+    .choice .ltr {
+      width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center;
+      font-size: .75rem; font-weight: 500; background: var(--card); box-shadow: var(--shadow); flex-shrink: 0;
+    }
+    .choice.picked { background: var(--muted); }
+    .choice.picked .ltr { background: var(--ink); color: var(--card); }
+    .choice.good { background: rgba(44,107,74,.12); }
+    .choice.good .ltr { background: var(--success); color: #fff; }
+    .choice.bad { background: rgba(166,31,26,.12); }
+    .choice.bad .ltr { background: var(--danger); color: #fff; }
+    .chips { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: .25rem; }
+    .chip {
+      height: 2.5rem; border: 0; border-radius: 999px; padding: 0 .75rem; white-space: nowrap;
+      background: var(--card); color: var(--muted-fg); box-shadow: var(--shadow); font-size: .875rem; font-weight: 500;
+    }
+    .chip.on { background: var(--ink); color: var(--card); }
+    .formula { background: var(--bg); border-radius: .75rem; padding: .75rem 1rem; box-shadow: var(--shadow); font-family: var(--display); font-size: 1.25rem; }
+    .bottom {
+      position: fixed; inset: auto 0 0 0; display: grid; grid-template-columns: repeat(5, 1fr);
+      background: var(--card); border-top: 1px solid #d5cdc0;
+      padding-bottom: env(safe-area-inset-bottom); z-index: 20;
+    }
+    @media (min-width: 768px) { .bottom { display: none; } }
+    .bottom button {
+      min-height: 3.5rem; border: 0; background: transparent; color: var(--muted-fg);
+      font-size: .7rem; font-weight: 500;
+    }
+    .bottom button.on { color: var(--accent); }
+    .res a {
+      display: flex; justify-content: space-between; gap: .75rem; align-items: center;
+      padding: 1rem 1.25rem; border-bottom: 1px solid #d5cdc0; text-decoration: none;
+    }
+    .res { background: var(--card); border-radius: 1.75rem; overflow: hidden; box-shadow: var(--shadow); }
+    .res a:last-child { border-bottom: 0; }
+    .muted { color: var(--muted-fg); }
+    .ok { background: rgba(44,107,74,.12); padding: 1rem; border-radius: .75rem; }
+    .no { background: rgba(166,31,26,.12); padding: 1rem; border-radius: .75rem; }
+    .pills { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .pills button {
+      width: 2.25rem; height: 2.25rem; border: 0; border-radius: .5rem;
+      background: var(--card); box-shadow: var(--shadow); font-size: .75rem; font-variant-numeric: tabular-nums;
+    }
+    .pills button.on { background: var(--ink); color: var(--card); }
+    .pills button.mark { background: var(--muted); }
+    .md-only { display: none; }
+    @media (min-width: 768px) { .md-only { display: block; } .sm-only { display: none !important; } }
+    select.lesson-pick {
+      width: 100%; height: 3rem; border: 0; border-radius: .5rem; padding: 0 .75rem;
+      background: var(--card); box-shadow: var(--shadow); font: inherit;
+    }
+    .timer { font-family: var(--display); font-size: 1.875rem; color: var(--accent); font-variant-numeric: tabular-nums; margin: 0; }
+    .list { list-style: none; padding: 0; margin: 0; }
+    .list li { padding: .75rem 0; border-bottom: 1px solid #d5cdc0; }
+    .list li:last-child { border-bottom: 0; }
+    .space > * + * { margin-top: 1.25rem; }
+  </style>
 </head>
 <body>
-<div id="gate"><div class="card"><div class="badge">Locked</div><h1>AC SHARK Study</h1><p class="lead">Enter the password, then tap Unlock.</p><p><input id="pw" type="password" placeholder="Password"></p><p class="err" id="gateErr"></p><div class="row"><button class="btn primary" id="unlockBtn">Unlock</button></div></div></div>
-<div class="app" id="app">
-<header class="top"><div class="brand">AC SHARK<small>CURRENT STUDY SITE</small></div>
-<nav class="nav-desk"><button data-go="home" class="active">Home</button><button data-go="library">Library</button><button data-go="learn">Learn</button><button data-go="practice">Practice</button><button data-go="exam">Exam Lab</button></nav></header>
-<section id="home" class="view on"><div class="card"><div class="badge">Current website</div><h1>Study for the Texas Environmental Air Class A exam.</h1><p class="lead">Works on phone and computer. Books stay in Drive. This site is the one you use now. Old Version 17 files stay in Drive as archive.</p><div class="row"><button class="btn primary" data-go="learn">Continue lesson</button><button class="btn ghost" data-go="practice">Practice</button><button class="btn ghost" data-go="exam">Open Exam Lab</button></div></div>
-<div class="grid"><div class="metric"><span>Today</span><b>Ohm’s law + power</b></div><div class="metric"><span>Exam frame</span><b>120 scored / 230 min</b></div><div class="metric"><span>Pass mark</span><b>70%</b></div><div class="metric"><span>Codes</span><b>2024 books</b></div></div></section>
-<section id="library" class="view"><div class="card"><div class="badge">Library</div><h1>Your resources</h1><p class="lead">Tap Open resource. Sign into Google if asked. Full books stay in Drive.</p></div><div class="lib" id="libCards"></div></section>
-<section id="learn" class="view"><div class="card" id="lessonCard"></div><div class="row"><button class="btn ghost" id="prevLesson">Previous</button><button class="btn primary" id="nextLesson">Next lesson</button><button class="btn ghost" data-go="practice">Try questions</button></div></section>
-<section id="practice" class="view"><div class="card"><div class="badge">Practice</div><h1 id="qTitle">Question</h1><p class="lead" id="qMeta"></p><p id="qStem"></p><div id="qChoices"></div><div class="row"><button class="btn ghost" id="helpBtn">Help</button><button class="btn ghost" id="studyMoreBtn">Study this more</button><button class="btn primary" id="checkBtn">Check</button><button class="btn ghost" id="nextBtn" hidden>Next</button></div><div class="box" id="helpBox" hidden></div><div class="box" id="explainBox" hidden></div></div></section>
-<section id="exam" class="view"><div class="card"><div class="badge">Exam Lab</div><h1>Timed practice</h1><p class="lead">Not the real PSI exam. 8 questions. 12 minutes.</p><p class="clock" id="clock">12:00</p><div class="row"><button class="btn primary" id="startExam">Start timed run</button><button class="btn ghost" id="stopExam">Stop</button></div><div id="examBody" hidden><p id="eqStem"></p><div id="eqChoices"></div><div class="row"><button class="btn primary" id="examNext">Save and next</button></div></div><div id="examResult" class="box" hidden></div></div></section>
-</div>
-<nav class="tabs"><button data-go="home" class="active">Home</button><button data-go="library">Library</button><button data-go="learn">Learn</button><button data-go="practice">Practice</button><button data-go="exam">Exam</button></nav>
-<script>
-const GATE_KEY="acSharkPublicGate_20260903";
-const HASH="1f7bf1642534bd08b5bb3cd33d79b056d620b70e673229499387df97c1edd70f";
-async function sha(s){const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("")}
-function openApp(){document.getElementById("gate").style.display="none";document.getElementById("app").style.display="block"}
-async function tryUnlock(){if((await sha(document.getElementById("pw").value.trim()))===HASH){sessionStorage.setItem(GATE_KEY,"ok");openApp()}else document.getElementById("gateErr").textContent="Wrong password."}
-if(sessionStorage.getItem(GATE_KEY)==="ok") openApp();
-document.getElementById("unlockBtn").onclick=tryUnlock;
-document.getElementById("pw").addEventListener("keydown",e=>{if(e.key==="Enter")tryUnlock()});
-const resources=[{title:"2024 Practice Test V2",note:"Current 125-question printable test",url:"https://drive.google.com/file/d/1tomQlTmC8UdpFqcsEMntMYpkXaQhsnmM/view"},{title:"PSI Practice Desk Pack",note:"Rules, tab plan, lookup map",url:"https://drive.google.com/file/d/1zABFV1_hqaKZyERVkzSynvVN-2pyXfCF/view"},{title:"2024 Code Lookup Pack",note:"IMC, IFGC, and UMC study map",url:"https://drive.google.com/file/d/1haQreg1yW__xWFaPETSJs0csbLDPqPC4/view"},{title:"Inspection Memory Guide",note:"Condensate, ducts, gas, venting",url:"https://drive.google.com/file/d/1_Q0pbxGJb2xuOOi-1YLF1iRSOEuITJNP/view"},{title:"A2L + Formula Tools",note:"Formulas and A2L review",url:"https://drive.google.com/file/d/1ELSnT34aTixn3t1XRqgs2F3jeqnm1gYo/view"},{title:"Modern Refrigeration book map",note:"Chapter and page locators",url:"https://docs.google.com/spreadsheets/d/1LAN51SrJzLom2PmTnn2czURs4FRtbwxROQV1ClkJ7qM/edit"},{title:"Study Library folder",note:"All exam packets in one Drive folder",url:"https://drive.google.com/drive/folders/1R2vda5-rwp-lbmfqDMWKZNkjepNm3sR_"},{title:"Official PSI bulletin",note:"Public candidate bulletin",url:"https://test-takers.psiexams.com/api/content/bulletin/5994"},{title:"PSI scheduling",note:"Official scheduling portal",url:"https://test-takers.psiexams.com/tdlnrp"}];
-document.getElementById("libCards").innerHTML=resources.map(r=>`<div class="card"><b>${r.title}</b><p class="lead">${r.note}</p><div class="row"><a class="btn blue" href="${r.url}" target="_blank" rel="noopener">Open resource</a></div></div>`).join("");
-const lessons=[{title:"Calculate current with Ohm’s law",body:"<p class='lead'>Find current from voltage and resistance.</p><p class='formula'>I = E ÷ R</p><div class='box'><b>Plain English.</b> Current is flow. Voltage is the push. Resistance is the squeeze.</div><div class='box'><b>Example.</b> 240 V and 60 Ω. 240 ÷ 60 = 4 A.</div><div class='box safe'><b>Safety.</b> Math only. Do not work live equipment from this page.</div>"},{title:"Calculate power",body:"<p class='formula'>P = I × E</p><div class='box'><b>Example.</b> 10 A at 240 V = 2,400 W = 2.4 kW.</div>"},{title:"Superheat",body:"<div class='box'>Superheat is how much hotter the vapor is than its boiling temperature.</div><div class='box safe'><b>Safety.</b> Use rated gauges and PPE.</div>"},{title:"Subcooling",body:"<div class='box'>Subcooling is how much cooler the liquid is than its condensing temperature.</div>"},{title:"Open-book exam",body:"<div class='box'>120 scored items, 230 minutes, 70% to pass. 2024 books on or after September 1, 2026. Bring only approved references.</div>"}];
-let li=0;function renderLesson(){document.getElementById("lessonCard").innerHTML=`<div class=\"badge\">Learn ${li+1} / ${lessons.length}</div><h1>${lessons[li].title}</h1>${lessons[li].body}`}document.getElementById("prevLesson").onclick=()=>{li=(li+lessons.length-1)%lessons.length;renderLesson()};document.getElementById("nextLesson").onclick=()=>{li=(li+1)%lessons.length;renderLesson()};renderLesson();
-const questions=[{skill:"Ohm’s law",stem:"A 240-volt heater circuit measures 60 ohms. What is the current?",choices:["2 A","4 A","6 A","8 A"],answer:1,why:"240 ÷ 60 = 4 A.",help:"E over R."},{skill:"Ohm’s law",stem:"A 120-volt control circuit measures 40 ohms. What is the current?",choices:["2 A","3 A","4 A","8 A"],answer:1,why:"120 ÷ 40 = 3 A.",help:"Divide volts by ohms."},{skill:"Power",stem:"A circuit draws 10 A at 240 V. What is the true power?",choices:["24 W","240 W","2,400 W / 2.4 kW","24,000 W"],answer:2,why:"10 × 240 = 2,400 W.",help:"Amps times volts."},{skill:"Power",stem:"A 5 A load on 120 V uses how much power?",choices:["24 W","120 W","600 W","1,200 W"],answer:2,why:"5 × 120 = 600 W.",help:"Multiply."},{skill:"Superheat",stem:"Superheat is best described as:",choices:["Liquid cooler than condensing temperature","Vapor warmer than evaporating temperature","High minus low pressure","Oil temperature only"],answer:1,why:"Vapor above saturation.",help:"Think vapor."},{skill:"Subcooling",stem:"Subcooling is best described as:",choices:["Vapor warmer than evaporating temperature","Liquid cooler than condensing temperature","Fan amps","Filter-drier drop only"],answer:1,why:"Liquid below saturation.",help:"Think liquid line."},{skill:"Exam",stem:"How many scored items are on the Class A exam?",choices:["60","80","120","200"],answer:2,why:"120 scored items.",help:"Bulletin frame."},{skill:"Exam",stem:"What score is needed to pass?",choices:["60%","65%","70%","80%"],answer:2,why:"70%.",help:"Pass mark."},{skill:"Open book",stem:"What should you bring into the PSI room?",choices:["Custom packets","Only current approved reference books","This website on your phone","Any 2021 code book"],answer:1,why:"Approved references only.",help:"Packets stay home."},{skill:"Codes",stem:"Exams on or after September 1, 2026 use which code year?",choices:["2018","2021","2024","2027"],answer:2,why:"2024 books.",help:"Do not use retired 2021 books."},{skill:"Safety",stem:"This study site is for:",choices:["Live work on energized gear","Math, recognition, and book study only","Skipping lockout","Skipping PPE"],answer:1,why:"Study only.",help:"Safety first."},{skill:"Library",stem:"Where do the full textbooks stay?",choices:["On this public website","In your Drive and paper books","Inside the password box","On a ChatGPT site"],answer:1,why:"Drive and paper books.",help:"Use Library cards."}];
-const KEY="acSharkModern_20260903";const state=JSON.parse(localStorage.getItem(KEY)||'{"i":0,"answered":0,"correct":0,"checked":false,"pick":null}');
-function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-function go(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id===id));document.querySelectorAll("[data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===id));if(id==="practice")renderQ()}
-document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
-function renderQ(){const q=questions[state.i];document.getElementById("qTitle").textContent="Question "+(state.i+1)+" of "+questions.length;document.getElementById("qMeta").textContent=q.skill;document.getElementById("qStem").textContent=q.stem;const box=document.getElementById("qChoices");box.innerHTML="";q.choices.forEach((c,idx)=>{const btn=document.createElement("button");btn.className="choice"+(state.pick===idx?" picked":"");btn.textContent=String.fromCharCode(65+idx)+". "+c;btn.disabled=state.checked;btn.onclick=()=>{state.pick=idx;save();renderQ()};if(state.checked){if(idx===q.answer)btn.classList.add("good");if(state.pick===idx&&idx!==q.answer)btn.classList.add("bad")}box.appendChild(btn)});document.getElementById("checkBtn").hidden=state.checked;document.getElementById("nextBtn").hidden=!state.checked;document.getElementById("helpBox").hidden=true;const exp=document.getElementById("explainBox");if(state.checked){exp.hidden=false;exp.innerHTML="<b>"+(state.pick===q.answer?"Correct.":"Not yet.")+"</b> "+q.why}else exp.hidden=true}
-document.getElementById("helpBtn").onclick=()=>{const b=document.getElementById("helpBox");b.hidden=false;b.innerHTML="<b>Help.</b> "+questions[state.i].help};
-document.getElementById("studyMoreBtn").onclick=()=>go("learn");
-document.getElementById("checkBtn").onclick=()=>{if(state.pick===null)return;state.checked=true;state.answered++;if(state.pick===questions[state.i].answer)state.correct++;save();renderQ()};
-document.getElementById("nextBtn").onclick=()=>{state.i=(state.i+1)%questions.length;state.checked=false;state.pick=null;save();renderQ()};
-let examOn=false,examLeft=720,examTimer=null,examI=0,examSet=[];
-function fmt(t){return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
-function renderExamQ(){const q=examSet[examI];document.getElementById("eqStem").textContent=(examI+1)+". "+q.stem;const box=document.getElementById("eqChoices");box.innerHTML="";q.choices.forEach((c,idx)=>{const btn=document.createElement("button");btn.className="choice";btn.textContent=String.fromCharCode(65+idx)+". "+c;btn.onclick=()=>{q.pick=idx;box.querySelectorAll("button").forEach(x=>x.classList.remove("picked"));btn.classList.add("picked")};box.appendChild(btn)})}
-function finishExam(){examOn=false;clearInterval(examTimer);document.getElementById("examBody").hidden=true;const r=document.getElementById("examResult");r.hidden=false;r.innerHTML="<b>Timed run finished.</b> "+examSet.filter(q=>q.pick===q.answer).length+" / "+examSet.length+" correct. Practice only."}
-document.getElementById("startExam").onclick=()=>{examSet=questions.slice(0,8).map(q=>({...q,pick:null}));examI=0;examLeft=720;examOn=true;document.getElementById("examResult").hidden=true;document.getElementById("examBody").hidden=false;document.getElementById("clock").textContent=fmt(examLeft);renderExamQ();clearInterval(examTimer);examTimer=setInterval(()=>{examLeft--;document.getElementById("clock").textContent=fmt(Math.max(0,examLeft));if(examLeft<=0)finishExam()},1000)};
-document.getElementById("stopExam").onclick=()=>{if(examOn)finishExam()};
-document.getElementById("examNext").onclick=()=>{if(examI>=examSet.length-1)finishExam();else{examI++;renderExamQ()}};
-</script>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M8 22 L16 8 L24 22" stroke="#fff7f0" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 22 H20" stroke="#fff7f0" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+        <div>
+          <div style="font-family:var(--display);font-weight:600">AC SHARK</div>
+          <div class="muted" style="font-size:.75rem;color:var(--sidebar-muted)">Class A study</div>
+        </div>
+      </div>
+      <nav class="nav" id="desk-nav"></nav>
+      <div class="side-meta" id="side-meta"></div>
+    </aside>
+    <div class="main-wrap">
+      <header class="topbar">
+        <div class="mark"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M8 22 L16 8 L24 22" stroke="#fff7f0" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 22 H20" stroke="#fff7f0" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+        <div>
+          <div style="font-family:var(--display);font-weight:600;font-size:.9rem">AC SHARK</div>
+          <div class="muted" style="font-size:.75rem" id="mobile-page">Home</div>
+        </div>
+      </header>
+      <div class="content" id="root"></div>
+    </div>
+  </div>
+  <nav class="bottom" id="mob-nav"></nav>
+  <script>window.DATA = {"lessons":[{"id":"ohms","track":"electrical","title":"Calculate current with Ohm’s law","lead":"Find current from voltage and resistance on the same circuit path.","formula":"I = E ÷ R","blocks":[{"kind":"note","title":"Plain English","body":"Current is flow. Voltage is the push. Resistance is the squeeze. Divide the push by the squeeze."},{"kind":"note","title":"Technician words","body":"I is amperes. E is volts. R is ohms. Stay on one path. Do not mix series and parallel values."},{"kind":"memory","title":"Remember","body":"Cover I in the Ohm’s law triangle. What is left is E over R."},{"kind":"note","title":"Worked example","body":"A 240 V heater circuit measures 60 Ω. I = 240 ÷ 60 = 4 A."},{"kind":"safety","title":"Safety","body":"This is math and recognition only. It does not tell you to work on live equipment."}],"locator":"Modern Refrigeration — electrical fundamentals / Ohm’s law. Open the book map in Library."},{"id":"power","track":"electrical","title":"Calculate true power","lead":"Find watts from current and voltage on a resistive load.","formula":"P = I × E","blocks":[{"kind":"note","title":"Plain English","body":"Power is how hard the circuit is working. Multiply flow by push."},{"kind":"note","title":"Technician words","body":"P is watts. 1,000 W = 1 kW. On a resistive heater, true power is volts times amps."},{"kind":"note","title":"Worked example","body":"10 A at 240 V. P = 10 × 240 = 2,400 W = 2.4 kW."},{"kind":"memory","title":"Units","body":"Move three places: 1.5 kW = 1,500 W. 3,600 W = 3.6 kW."},{"kind":"safety","title":"Safety","body":"Math only. Do not treat this page as a live-work procedure."}],"locator":"Modern Refrigeration — electrical power and loads."},{"id":"cycle","track":"refrigeration","title":"The vapor-compression cycle","lead":"Four jobs, in order: absorb heat, raise pressure, reject heat, drop pressure.","blocks":[{"kind":"note","title":"Order","body":"Evaporator → compressor → condenser → metering device → back to the evaporator."},{"kind":"note","title":"What each part does","body":"Evaporator absorbs heat and boils liquid to vapor. Compressor takes low-pressure vapor and discharges high-pressure vapor. Condenser rejects heat and condenses vapor to liquid. The metering device drops pressure so the liquid can boil again."},{"kind":"memory","title":"Vapor in, vapor out","body":"The compressor is a vapor pump. Liquid in the compressor is a failure mode, not a design intent."},{"kind":"safety","title":"Safety","body":"Concept lesson only. Recover refrigerant before opening a system."}],"locator":"Modern Refrigeration — refrigeration cycle / four major components."},{"id":"sh","track":"refrigeration","title":"Superheat","lead":"Superheat is how much hotter the vapor is than its saturation temperature.","formula":"SH = actual vapor °F − saturation °F","blocks":[{"kind":"note","title":"Plain English","body":"After all liquid has boiled, leftover heat in the vapor is superheat."},{"kind":"note","title":"Field meaning","body":"Measure suction-line temperature and compare it with evaporator saturation from the low-side pressure. Low superheat can mean overfeed. High superheat can mean a starved coil."},{"kind":"memory","title":"Where you read it","body":"Superheat lives on the low side / suction line. Subcooling lives on the high side / liquid line."},{"kind":"safety","title":"Safety","body":"Use rated gauges and PPE. This is a concept lesson, not a charging procedure."}],"locator":"Modern Refrigeration — superheat / evaporator feed. Confirm the heading in your 22e book."},{"id":"sc","track":"refrigeration","title":"Subcooling","lead":"Subcooling is how much cooler the liquid is than its saturation temperature.","formula":"SC = saturation °F − actual liquid °F","blocks":[{"kind":"note","title":"Plain English","body":"After vapor has condensed, leftover cooling of the liquid is subcooling."},{"kind":"note","title":"Field meaning","body":"Measure liquid-line temperature and compare it with condenser saturation from the high-side pressure. Subcooling helps confirm liquid at the metering device."},{"kind":"note","title":"Charge clues","body":"Low subcooling often tracks with undercharge. High subcooling can track with overcharge. Confirm with the whole picture, not one number."},{"kind":"safety","title":"Safety","body":"Concept only. Do not treat this page as a charging chart."}],"locator":"Modern Refrigeration — subcooling / condenser and liquid line."},{"id":"a2l","track":"refrigeration","title":"A2L mildly flammable refrigerants","lead":"A2L is a safety class, not a brand. Treat tools, leak checks, and charge limits as rated work.","blocks":[{"kind":"note","title":"What A2L means","body":"ASHRAE 34 class A2L means lower toxicity and mild flammability. It is not the same as older A1 “practically nonflammable” service habits."},{"kind":"note","title":"Field habits","body":"Use equipment and leak detection rated for the refrigerant. Follow the manufacturer charge limit. Ventilation and ignition-source rules matter more than they did on many A1 jobs."},{"kind":"memory","title":"Do not mix","body":"Do not drop an A2L charge into a system built and labeled for a different safety class. Look up the nameplate and the service literature."},{"kind":"safety","title":"Safety","body":"Flammability is mild, not zero. No open flame, no smoking, no unrated electrical spark sources in a leaked cloud."}],"locator":"A2L + Formula Tools in Library. Modern Refrigeration — refrigerant safety classes. Equipment nameplate."},{"id":"vac","track":"refrigeration","title":"Recovery, evacuate, and vacuum","lead":"Take the refrigerant out. Then pull air and moisture out. Those are two different jobs.","blocks":[{"kind":"note","title":"Recovery","body":"Move refrigerant from the system into a recovery cylinder before you open the circuit. Recovery is not reclaim. Reclaim is reprocessing to a purity standard."},{"kind":"note","title":"Evacuate","body":"A vacuum pump pulls noncondensable gas and moisture. A micron gauge on the system tells you what the system is doing, not what the pump is doing."},{"kind":"memory","title":"Hold test","body":"A standing vacuum that rises fast usually means a leak or leftover moisture. Isolate the pump and watch the gauge."},{"kind":"safety","title":"Safety","body":"Use rated cylinders. Do not mix recovered refrigerants. Follow EPA 608 rules on venting."}],"locator":"Modern Refrigeration — recovery, evacuation, and charging. EPA 608 is a separate credential."},{"id":"condensate","track":"code","title":"Condensate disposal","lead":"Cooling coils make water. The code cares where that water goes and what happens if the drain fails.","blocks":[{"kind":"note","title":"What to look up","body":"In the 2024 IMC and UMC, find condensate disposal: slope, trap, materials, and termination. Do not guess a number in the PSI room. Find the heading."},{"kind":"note","title":"Failure path","body":"Where overflow would damage the building, expect a secondary drain, an auxiliary pan, or an approved automatic shutoff. That idea is the exam skill. The exact sentence is in the book."},{"kind":"memory","title":"Termination","body":"Do not dump condensate onto a walkway, street, or alley as a nuisance. Confirm allowed termination in the current book."},{"kind":"safety","title":"Honesty","body":"This lesson teaches where to look. It is not a reprint of the code table."}],"locator":"2024 IMC condensate disposal. 2024 UMC condensate equivalent. Inspection Memory Guide in Library."},{"id":"gas","track":"code","title":"Fuel gas piping basics","lead":"Gas questions live in the IFGC, not in a mechanical-only habit.","blocks":[{"kind":"note","title":"Which book","body":"Pipe sizing, shutoffs, sediment traps, CSST, and appliance connectors are fuel-gas work. Open the 2024 IFGC. The mechanical book will not save a gas-sizing question."},{"kind":"note","title":"Field pattern","body":"Expect an accessible shutoff, a sediment trap where the IFGC requires one, and bonding/grounding rules for CSST. Confirm each in the current book. Do not run gas pipe by “what the last job did.”"},{"kind":"memory","title":"Stem words","body":"If the stem says gas, CSST, sediment trap, or BTU load of an appliance, pick up the IFGC first."},{"kind":"safety","title":"Safety","body":"Fuel gas leaks are an emergency. This page is exam navigation, not a lighting procedure."}],"locator":"2024 IFGC — gas piping and appliance connections. 2024 Code Lookup Pack in Library."},{"id":"vent","track":"code","title":"Venting categories","lead":"The appliance category tells you draft, pressure, and what kind of vent it can use.","blocks":[{"kind":"note","title":"Categories in one line","body":"Category I is typically negative or neutral draft, non-condensing. Category IV is positive-pressure, condensing, and needs a listed vent system made for that appliance."},{"kind":"note","title":"What to look up","body":"Termination clearances, slope, support, and whether two appliances may share a vent are in the 2024 IFGC. Condensing appliances also make liquid that has to go somewhere."},{"kind":"memory","title":"Do not mix","body":"Do not treat a Category IV plastic vent like a Category I masonry chimney job. The book, the listing, and the nameplate win."},{"kind":"safety","title":"Safety","body":"Wrong venting is a carbon monoxide problem. Look it up. Do not invent a vent path."}],"locator":"2024 IFGC — chimneys and vents. Inspection Memory Guide in Library."},{"id":"ducts","track":"code","title":"Ducts, return air, and sizing","lead":"Air has to get back to the blower, and the duct has to be sized and installed as listed.","blocks":[{"kind":"note","title":"Sizing tool","body":"The ADI duct calculator is on the approved PSI reference list. Practice using it at home so the wheel is not new in the room."},{"kind":"note","title":"Install habits the books test","body":"Stretch flex duct. Support it. Seal joints. Keep return air out of a garage. Insulation on cooling ducts in unconditioned space — look up the current mechanical-code heading, do not invent R-values."},{"kind":"memory","title":"Return path","body":"If the blower cannot get air back, static rises and capacity falls. A closed-room supply with no return is a comfort and code problem."},{"kind":"safety","title":"Safety","body":"Combustion appliances need their own air. Do not starve a furnace for the sake of a tight return."}],"locator":"2024 IMC/UMC duct chapters. ADI Duct Size Calculator. Modern Refrigeration — air distribution."},{"id":"law","track":"code","title":"Texas ACR law in plain words","lead":"The exam can ask who may contract, advertise, and pull the work — not just how to size a drain.","blocks":[{"kind":"note","title":"Public rules","body":"Texas Occupations Code Chapter 1302 and 16 TAC Chapter 75 are public law. Contracting air conditioning and refrigeration without the right license is the core prohibition."},{"kind":"note","title":"Class A frame","body":"Environmental Air Class A is the license this site studies for. Scope, advertising, and supervisor rules are in 1302 and the TDLR rules. Read those headings in the paper books. Do not rely on a forum summary."},{"kind":"memory","title":"Ads","body":"If you advertise the trade, the law expects a license behind the ad. Look up the exact advertising language in Chapter 1302."},{"kind":"safety","title":"Honesty","body":"This is not legal advice. It is a study map to the public statutes you may bring into the room."}],"locator":"Texas Occupations Code Chapter 1302. 16 TAC Chapter 75. TDLR exam page in Library."},{"id":"lookup","track":"exam","title":"Open-book lookup method","lead":"You will not memorize the UMC. You will find the heading before the clock eats you.","blocks":[{"kind":"note","title":"Read the stem for the book","body":"Gas, CSST, vents → IFGC. Condensate, ducts, mechanical rooms → IMC or UMC. Refrigeration theory, motors, cycle → Modern Refrigeration. Texas contracting → 1302 / TAC 75."},{"kind":"note","title":"Tabs","body":"Permanent commercial tabs are allowed. Custom packets stay home. Tab the table of contents, indexes, and the chapters you actually use."},{"kind":"memory","title":"Two-minute rule","body":"If you cannot see the heading in two minutes, mark the item, move, and come back. Open book still has a clock."},{"kind":"safety","title":"Honesty","body":"Questions on this site are original practice. They are not PSI exam items."}],"locator":"PSI Practice Desk Pack and 2024 Code Lookup Pack in Library. Official PSI bulletin."},{"id":"exam","track":"exam","title":"How the open-book exam works","lead":"Texas Environmental Air Class A: 120 scored items, 230 minutes, 70% to pass.","blocks":[{"kind":"note","title":"Current frame","body":"Five extra non-scored items add 10 minutes. Exams on or after September 1, 2026 use the 2024 UMC, IMC, and IFGC."},{"kind":"note","title":"What to bring","body":"Bring only the current approved references. Permanent commercial tabs are allowed. Custom packets stay home."},{"kind":"memory","title":"Practice that pays","body":"Open book still has a clock. Practice finding the heading fast, not memorizing every table with no book."},{"kind":"safety","title":"Honesty","body":"Questions on this site are original practice. They are not PSI exam items."}],"locator":"Open the PSI bulletin and TDLR exam page from Library."}],"questions":[{"id":"q1","lesson":"ohms","track":"electrical","skill":"Ohm’s law","stem":"A 240-volt heater circuit measures 60 ohms. What is the current?","choices":["2 A","4 A","6 A","8 A"],"answer":1,"why":"I = E ÷ R. 240 ÷ 60 = 4 A.","help":"Cover I. Divide volts by ohms."},{"id":"q2","lesson":"ohms","track":"electrical","skill":"Ohm’s law","stem":"A 120-volt control circuit measures 40 ohms. What is the current?","choices":["2 A","3 A","4 A","8 A"],"answer":1,"why":"I = 120 ÷ 40 = 3 A.","help":"Same formula. 120 ÷ 40."},{"id":"q3","lesson":"ohms","track":"electrical","skill":"Ohm’s law","stem":"A 240-volt circuit measures 30 ohms. What is the current?","choices":["4 A","6 A","8 A","12 A"],"answer":2,"why":"I = 240 ÷ 30 = 8 A.","help":"Divide 240 by 30."},{"id":"q4","lesson":"power","track":"electrical","skill":"True power","stem":"A circuit draws 10 A at 240 V. What is the true power?","choices":["24 W","240 W","2,400 W / 2.4 kW","24,000 W"],"answer":2,"why":"P = I × E. 10 × 240 = 2,400 W = 2.4 kW.","help":"Watts = amps × volts."},{"id":"q5","lesson":"power","track":"electrical","skill":"True power","stem":"A 5 A load on 120 V uses how much power?","choices":["24 W","120 W","600 W","1,200 W"],"answer":2,"why":"5 × 120 = 600 W.","help":"Multiply current by voltage."},{"id":"q14","lesson":"power","track":"electrical","skill":"Units","stem":"How many watts are in 1.5 kW?","choices":["15 W","150 W","1,500 W","15,000 W"],"answer":2,"why":"1 kW = 1,000 W, so 1.5 kW = 1,500 W.","help":"Move the decimal three places."},{"id":"q15","lesson":"ohms","track":"electrical","skill":"Ohm’s law","stem":"A 24-volt control circuit measures 80 ohms. What is the current?","choices":["0.3 A","0.8 A","3 A","8 A"],"answer":0,"why":"I = 24 ÷ 80 = 0.3 A.","help":"Small voltage, larger resistance, small current."},{"id":"q16","lesson":"cycle","track":"refrigeration","skill":"Cycle","stem":"What is the correct order of the four major components in the direction of refrigerant flow?","choices":["Compressor, evaporator, metering device, condenser","Evaporator, compressor, condenser, metering device","Condenser, evaporator, compressor, metering device","Metering device, compressor, evaporator, condenser"],"answer":1,"why":"Vapor leaves the evaporator, is compressed, condenses, then drops pressure at the metering device.","help":"Start at the coil that absorbs heat."},{"id":"q17","lesson":"cycle","track":"refrigeration","skill":"Cycle","stem":"The compressor is best described as:","choices":["A liquid pump that raises oil pressure only","A vapor pump that raises refrigerant pressure and temperature","A device that condenses vapor to liquid","A device that drops pressure so liquid can boil"],"answer":1,"why":"The compressor takes in low-pressure vapor and discharges high-pressure vapor.","help":"Vapor in, vapor out."},{"id":"q18","lesson":"cycle","track":"refrigeration","skill":"Cycle","stem":"Where is heat rejected from the refrigerant in a standard air-cooled split system?","choices":["Evaporator","Metering device","Suction line accumulator only","Condenser"],"answer":3,"why":"The condenser rejects heat so vapor can condense to liquid.","help":"Outdoor coil on a cooling split system."},{"id":"q6","lesson":"sh","track":"refrigeration","skill":"Superheat","stem":"Suction-line temperature is 50°F. Evaporator saturation is 40°F. What is superheat?","choices":["10°F","40°F","50°F","90°F"],"answer":0,"why":"SH = 50 − 40 = 10°F.","help":"Actual vapor temperature minus saturation."},{"id":"q8","lesson":"sh","track":"refrigeration","skill":"Superheat","stem":"Superheat is best described as:","choices":["Liquid cooler than condensing temperature","Vapor warmer than evaporating temperature","The difference between high and low pressure","Compressor oil temperature only"],"answer":1,"why":"Superheat is vapor temperature above saturation.","help":"Think vapor, not liquid."},{"id":"q19","lesson":"sh","track":"refrigeration","skill":"Superheat","stem":"High superheat at the evaporator most often points to:","choices":["A starved coil (underfeed or restriction)","A flooded coil (overfeed)","A condenser fan running too fast only","Correct charge with no other clues"],"answer":0,"why":"If vapor is much hotter than saturation, the coil ran out of liquid early.","help":"High SH = hungry coil."},{"id":"q7","lesson":"sc","track":"refrigeration","skill":"Subcooling","stem":"Condenser saturation is 110°F. Liquid-line temperature is 95°F. What is subcooling?","choices":["15°F","95°F","110°F","205°F"],"answer":0,"why":"SC = 110 − 95 = 15°F.","help":"Saturation minus actual liquid temperature."},{"id":"q9","lesson":"sc","track":"refrigeration","skill":"Subcooling","stem":"Subcooling is best described as:","choices":["Vapor warmer than evaporating temperature","Liquid cooler than condensing temperature","The amp draw of the condenser fan","Filter-drier pressure drop only"],"answer":1,"why":"Subcooling is liquid temperature below saturation.","help":"Think liquid line."},{"id":"q20","lesson":"sc","track":"refrigeration","skill":"Subcooling","stem":"Very low subcooling with a warm liquid line most often points to:","choices":["Overcharge","Undercharge or a condenser that is not making liquid","Correct charge","A suction-line restriction only"],"answer":1,"why":"If liquid is barely cooler than saturation, there is little leftover liquid in the condenser.","help":"Low SC = not much liquid stacked in the condenser."},{"id":"q21","lesson":"a2l","track":"refrigeration","skill":"A2L","stem":"ASHRAE 34 class A2L means the refrigerant is:","choices":["Higher toxicity and nonflammable","Lower toxicity and mildly flammable","A toxic gas with no flame risk","The same service class as older A1 refrigerants"],"answer":1,"why":"A is lower toxicity. 2L is mild flammability.","help":"A2L is not A1."},{"id":"q22","lesson":"a2l","track":"refrigeration","skill":"A2L","stem":"When servicing an A2L system you should:","choices":["Use any leftover A1 recovery machine and ignore the nameplate","Follow the nameplate, use rated tools, and respect charge limits","Vent leftover charge because A2L is harmless","Add propane to “boost cooling”"],"answer":1,"why":"Mildly flammable still means rated equipment, listed charge, and no improvising.","help":"Nameplate and listing win."},{"id":"q23","lesson":"vac","track":"refrigeration","skill":"Vacuum","stem":"Recovery means:","choices":["Reprocessing refrigerant to a purity standard","Removing refrigerant from a system into a cylinder","Pulling a micron vacuum only","Adding nitrogen until the gauges look even"],"answer":1,"why":"Recovery moves refrigerant out of the system. Reclaim is a plant process. Vacuum is air and moisture.","help":"Three different words: recover, recycle, reclaim."},{"id":"q24","lesson":"vac","track":"refrigeration","skill":"Vacuum","stem":"A micron gauge should be read:","choices":["On the vacuum pump exhaust only","On the system, after isolating the pump for a hold test","On the recovery cylinder only","On the suction gauge in psig"],"answer":1,"why":"You need to know what the system is doing. A pump can look deep while the system is still wet or leaking.","help":"Isolate and watch the rise."},{"id":"q25","lesson":"condensate","track":"code","skill":"Condensate","stem":"If a clogged condensate drain would damage the building, the mechanical code pattern is to provide:","choices":["No extra protection; the primary drain is enough","A secondary drain, auxiliary pan, or approved automatic shutoff — confirm the current book","A hose onto the nearest sidewalk","An open tee in a return-air plenum"],"answer":1,"why":"The exam skill is the failure path: protect the building. The exact method is in the 2024 IMC/UMC condensate heading.","help":"Look up condensate disposal, not the duct chapter."},{"id":"q26","lesson":"condensate","track":"code","skill":"Condensate","stem":"Which book do you open first for a condensate termination question on a cooling coil?","choices":["IFGC only","Texas Occupations Code 1302","2024 IMC or UMC","OSHA 1904"],"answer":2,"why":"Condensate from mechanical cooling is a mechanical-code topic.","help":"Gas book is the wrong family."},{"id":"q27","lesson":"gas","track":"code","skill":"Fuel gas","stem":"A question about CSST bonding or gas pipe sizing should send you to:","choices":["2024 IFGC","Modern Refrigeration only","OSHA 1904","The ADI duct calculator"],"answer":0,"why":"Fuel gas piping and CSST rules live in the International Fuel Gas Code.","help":"Stem says gas → IFGC."},{"id":"q28","lesson":"gas","track":"code","skill":"Fuel gas","stem":"A sediment trap (drip leg) on a gas appliance is:","choices":["A condensate accessory from the IMC only","An IFGC / appliance-connection detail you look up, not invent","Required on every water heater vent","The same as a refrigerant filter-drier"],"answer":1,"why":"Sediment traps are fuel-gas appliance piping. Confirm when and where in the current IFGC.","help":"Do not answer gas details from the refrigeration book."},{"id":"q29","lesson":"vent","track":"code","skill":"Venting","stem":"A Category IV condensing appliance typically requires:","choices":["A negative-draft masonry chimney with no listing check","A listed positive-pressure vent system made for that appliance","No vent because it is electric","The same vent as any Category I draft-hood furnace"],"answer":1,"why":"Category IV is positive-pressure and condensing. Use the listed vent. Confirm in the IFGC and the nameplate.","help":"Category tells you the vent family."},{"id":"q30","lesson":"vent","track":"code","skill":"Venting","stem":"Termination clearances for a gas vent to a window or air intake are found in:","choices":["The Ohm’s law chapter","2024 IFGC venting / termination headings","16 TAC Chapter 75 only","EPA 608"],"answer":1,"why":"How far a vent must sit from openings is a fuel-gas venting lookup.","help":"Do not memorize every inch. Find the table."},{"id":"q31","lesson":"ducts","track":"code","skill":"Ducts","stem":"Which approved tool is built for duct sizing practice in this exam family?","choices":["A micron gauge","The ADI Duct Size Calculator","A refrigerant scale","A manometer only"],"answer":1,"why":"The ADI calculator is on the approved reference list. Practice the wheel before test day.","help":"Library lists it under paper books for the PSI room."},{"id":"q32","lesson":"ducts","track":"code","skill":"Ducts","stem":"Flexible duct should be:","choices":["Left compressed on the coil so it “has slack”","Stretched, supported, and installed to the listing / mechanical-code rules","Run through a garage as the only return for a dwelling","Used as a gas vent liner"],"answer":1,"why":"Compressed flex is undersized in practice. Support and stretch it. Return air from a garage is a separate code problem.","help":"Install the duct like the book and the listing, not like a leftover scrap."},{"id":"q33","lesson":"law","track":"code","skill":"Texas law","stem":"The public statute that frames who may contract air conditioning and refrigeration in Texas is:","choices":["IMC Chapter 3 only","Texas Occupations Code Chapter 1302","ASHRAE 34","AHRI 700"],"answer":1,"why":"Chapter 1302 is the ACR license law. Mechanical code is how you build. 1302 is who may contract.","help":"Law book, not the UMC, for contracting questions."},{"id":"q34","lesson":"law","track":"code","skill":"Texas law","stem":"Advertising air conditioning contracting in Texas without the proper license is:","choices":["Allowed if the ad is only on social media","A 1302 / TDLR issue you look up in the law book, not a code-table issue","Handled only by the IFGC","Ignored if you hold EPA 608"],"answer":1,"why":"EPA 608 is federal refrigerant work. Texas advertising and contracting sit in 1302 and TAC 75.","help":"Wrong credential family."},{"id":"q35","lesson":"lookup","track":"exam","skill":"Lookup","stem":"The stem mentions CSST and a 120,000 Btu gas furnace. Which book do you pick up first?","choices":["2024 IFGC","Modern Refrigeration","OSHA 1904","2024 IMC condensate only"],"answer":0,"why":"Gas + CSST is the IFGC. Do not start in the refrigeration text.","help":"Read the stem for the book family before you hunt a page."},{"id":"q36","lesson":"lookup","track":"exam","skill":"Lookup","stem":"What may you bring into the PSI room as a study aid?","choices":["Printed custom packets and this website on a phone","Only the current approved reference books, with permanent commercial tabs allowed","Any older 2021 code book plus handwritten notes","A friend’s marked-up desk pack"],"answer":1,"why":"Approved references only. Custom packets stay home. Confirm the current bulletin.","help":"Desk packs are home tools."},{"id":"q10","lesson":"exam","track":"exam","skill":"Exam frame","stem":"How many scored items are on the Texas Environmental Air Class A exam?","choices":["60","80","120","200"],"answer":2,"why":"The current bulletin frame is 120 scored items.","help":"Plus extra non-scored items."},{"id":"q11","lesson":"exam","track":"exam","skill":"Exam frame","stem":"What score is needed to pass?","choices":["60%","65%","70%","80%"],"answer":2,"why":"70% is the pass mark in the current bulletin.","help":"Count correct scored items."},{"id":"q12","lesson":"exam","track":"exam","skill":"Open book","stem":"What should you bring into the PSI exam room?","choices":["Custom study packets and printed notes","Only the current approved reference books","Your phone with this website open","Any older 2021 code book"],"answer":1,"why":"Bring only current approved references. Leave custom packets at home.","help":"Desk packs are home tools."},{"id":"q13","lesson":"exam","track":"exam","skill":"Codes","stem":"Exams on or after September 1, 2026 use which code year?","choices":["2018","2021","2024","2027"],"answer":2,"why":"2024 UMC, IMC, and IFGC apply on or after that date.","help":"Do not study from retired 2021 books for this date."}],"resources":[{"title":"2024 Practice Test V2","note":"Current 125-question printable test","href":"https://drive.google.com/file/d/1tomQlTmC8UdpFqcsEMntMYpkXaQhsnmM/view","group":"packet"},{"title":"PSI Practice Desk Pack","note":"Rules, tab plan, lookup map","href":"https://drive.google.com/file/d/1zABFV1_hqaKZyERVkzSynvVN-2pyXfCF/view","group":"packet"},{"title":"2024 Code Lookup Pack","note":"IMC, IFGC, and UMC study map","href":"https://drive.google.com/file/d/1haQreg1yW__xWFaPETSJs0csbLDPqPC4/view","group":"packet"},{"title":"Inspection Memory Guide","note":"Condensate, ducts, gas, venting","href":"https://drive.google.com/file/d/1_Q0pbxGJb2xuOOi-1YLF1iRSOEuITJNP/view","group":"packet"},{"title":"A2L + Formula Tools","note":"Formulas and A2L review","href":"https://drive.google.com/file/d/1ELSnT34aTixn3t1XRqgs2F3jeqnm1gYo/view","group":"packet"},{"title":"Modern Refrigeration book map","note":"Chapter and page locators","href":"https://docs.google.com/spreadsheets/d/1LAN51SrJzLom2PmTnn2czURs4FRtbwxROQV1ClkJ7qM/edit","group":"packet"},{"title":"Study Library folder","note":"All exam packets in one Drive folder","href":"https://drive.google.com/drive/folders/1R2vda5-rwp-lbmfqDMWKZNkjepNm3sR_","group":"packet"},{"title":"Official PSI bulletin","note":"Public candidate bulletin","href":"https://test-takers.psiexams.com/api/content/bulletin/5994","group":"official"},{"title":"PSI scheduling","note":"Official scheduling portal","href":"https://test-takers.psiexams.com/tdlnrp","group":"official"},{"title":"TDLR exam page","note":"Texas ACR exam information","href":"https://www.tdlr.texas.gov/acr/acrexam.htm","group":"official"}],"paperBooks":["2024 Uniform Mechanical Code","2024 International Mechanical Code","2024 International Fuel Gas Code","Modern Refrigeration and Air Conditioning, 22nd Edition","ADI Duct Size Calculator","Texas Occupations Code Chapter 1302","16 TAC Chapter 75","OSHA 29 CFR Part 1904"],"trackLabel":{"electrical":"Electrical","refrigeration":"Refrigeration","code":"Code & law","exam":"Exam skills"},"EXAM_COUNT":10,"EXAM_SECONDS":900};</script>
+  <script>
+    const D = window.DATA;
+    const KEY = "ac-shark-study-v3-public";
+    const tabs = [
+      ["home", "Home"],
+      ["library", "Library"],
+      ["learn", "Learn"],
+      ["practice", "Practice"],
+      ["exam", "Exam Lab"],
+    ];
+    const tracks = ["electrical", "refrigeration", "code", "exam"];
+    const state = load();
+    let exam = { running: false, left: D.EXAM_SECONDS, idx: 0, setQ: [], picks: [], result: null };
+    let examTimer = null;
+    let helpOn = false;
+
+    function load() {
+      try { return Object.assign(defaults(), JSON.parse(localStorage.getItem(KEY) || "{}")); }
+      catch { return defaults(); }
+    }
+    function defaults() {
+      return {
+        view: "home", lessonIndex: 0, qId: D.questions[0].id, pick: null, checked: false,
+        answered: 0, correct: 0, doneLessons: [], missed: [], flagged: [],
+        practiceFilter: "all", practiceLessonId: null, lastExamRight: null, lastExamTotal: null,
+      };
+    }
+    function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+    function letter(i) { return String.fromCharCode(65 + i); }
+    function fmt(sec) {
+      const m = Math.floor(sec / 60);
+      const s = String(sec % 60).padStart(2, "0");
+      return m + ":" + s;
+    }
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    function meter(v, max) {
+      const pct = max ? Math.round((v / max) * 100) : 0;
+      return '<div class="meter" role="progressbar"><i style="width:' + pct + '%"></i></div>';
+    }
+    function bank() {
+      if (state.practiceLessonId) return D.questions.filter(q => q.lesson === state.practiceLessonId);
+      if (state.practiceFilter === "missed") return D.questions.filter(q => state.missed.includes(q.id));
+      if (state.practiceFilter === "flagged") return D.questions.filter(q => state.flagged.includes(q.id));
+      if (state.practiceFilter === "all") return D.questions;
+      return D.questions.filter(q => q.track === state.practiceFilter);
+    }
+
+    function renderNav() {
+      document.getElementById("desk-nav").innerHTML = tabs.map(([id, label]) =>
+        '<button type="button" class="' + (state.view === id ? "on" : "") + '" data-view="' + id + '">' + label + "</button>"
+      ).join("");
+      document.getElementById("mob-nav").innerHTML = tabs.map(([id, label]) =>
+        '<button type="button" class="' + (state.view === id ? "on" : "") + '" data-view="' + id + '">' + (id === "exam" ? "Exam" : label) + "</button>"
+      ).join("");
+      document.getElementById("side-meta").innerHTML =
+        state.doneLessons.length + "/" + D.lessons.length + " lessons<br>" +
+        state.answered + " / " + D.questions.length + " practiced";
+      document.getElementById("mobile-page").textContent = tabs.find(t => t[0] === state.view)[1];
+    }
+
+    function home() {
+      const next = D.lessons.find(l => !state.doneLessons.includes(l.id)) || D.lessons[0];
+      const pct = state.answered ? Math.round((state.correct / state.answered) * 100) : 0;
+      const formulas = D.lessons.filter(l => l.formula);
+      return '<div class="space">' +
+        '<div><p class="kicker">Texas Class A</p><h1 class="page-h">Study at the desk. Sit the exam with a book.</h1>' +
+        '<p class="lead">Short lessons, original questions, and a timed drill. Full textbooks stay in Drive or on the table.</p></div>' +
+        '<section class="card"><p class="kicker">Continue</p><h2>' + esc(next.title) + "</h2>" +
+        '<p class="muted">' + esc(next.lead) + '</p><div class="row" style="margin-top:1rem">' +
+        '<button class="btn" data-act="open-lesson" data-i="' + D.lessons.indexOf(next) + '">Open lesson</button>' +
+        '<button class="btn sec" data-view="practice">Practice</button>' +
+        '<button class="btn sec" data-view="exam">Exam Lab</button></div></section>' +
+        '<div class="stats">' +
+          stat("Lessons", state.doneLessons.length + "/" + D.lessons.length) +
+          stat("Accuracy", state.answered ? pct + "%" : "—") +
+          stat("Missed", String(state.missed.length)) +
+          stat("Last drill", state.lastExamTotal != null ? state.lastExamRight + "/" + state.lastExamTotal : "—") +
+        "</div>" +
+        "<h2>Tracks</h2><div class=\"tracks\">" + tracks.map(t => {
+          const group = D.lessons.filter(l => l.track === t);
+          const done = group.filter(l => state.doneLessons.includes(l.id)).length;
+          const first = group.find(l => !state.doneLessons.includes(l.id)) || group[0];
+          return '<button class="track" data-act="open-lesson" data-i="' + D.lessons.indexOf(first) + '">' +
+            "<div style=\"display:flex;justify-content:space-between\"><b>" + D.trackLabel[t] + "</b><span class=\"muted\">" + done + "/" + group.length + "</span></div>" +
+            meter(done, group.length) + '<p class="muted" style="margin:.75rem 0 0">' + esc(first.title) + "</p></button>";
+        }).join("") + "</div>" +
+        '<section class="card"><h2>Formula strip</h2><ul class="list">' +
+        formulas.map(l => "<li style=\"display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap\"><span class=\"muted\">" + esc(l.title) + "</span><b>" + esc(l.formula) + "</b></li>").join("") +
+        "</ul></section>" +
+        '<section class="card"><h2>Exam frame</h2><div class="stats">' +
+        stat("Scored items", "120") + stat("Time", "230 min") + stat("Pass mark", "70%") + stat("Code year", "2024") +
+        '</div><p class="muted" style="margin-top:1rem">Exams on or after September 1, 2026 use the 2024 UMC, IMC, and IFGC. Questions here are original practice, not PSI items.</p></section></div>';
+    }
+
+    function stat(k, v) { return '<div class="stat"><p>' + k + "</p><b>" + v + "</b></div>"; }
+
+    function library() {
+      const packets = D.resources.filter(r => r.group === "packet");
+      const official = D.resources.filter(r => r.group === "official");
+      function list(title, items) {
+        return "<h2>" + title + '</h2><div class="res">' + items.map(r =>
+          '<a href="' + r.href + '" target="_blank" rel="noopener noreferrer"><div><b>' + esc(r.title) + '</b><div class="muted" style="font-size:.875rem">' + esc(r.note) + "</div></div><span class=\"muted\">Open</span></a>"
+        ).join("") + "</div>";
+      }
+      return '<div class="space"><div><p class="kicker">Library</p><h1 class="page-h">Packets and official pages</h1>' +
+        '<p class="lead">Sign into Google if a Drive file asks. This site does not host the full textbooks.</p></div>' +
+        list("Study packets", packets) + list("Official pages", official) +
+        '<section class="card"><h2>Paper books for the PSI room</h2><p class="muted">Bring only current approved references. Custom packets stay home.</p>' +
+        '<ul class="list">' + D.paperBooks.map(b => "<li>" + esc(b) + "</li>").join("") + "</ul></section></div>";
+    }
+
+    function learn() {
+      const lesson = D.lessons[state.lessonIndex] || D.lessons[0];
+      const related = D.questions.filter(q => q.lesson === lesson.id);
+      const done = state.doneLessons.includes(lesson.id);
+      const sel = '<label class="sm-only">Lesson<select class="lesson-pick" id="lesson-select">' +
+        D.lessons.map((l, i) => '<option value="' + i + '"' + (i === state.lessonIndex ? " selected" : "") + ">" +
+          (state.doneLessons.includes(l.id) ? "Done · " : "") + esc(l.title) + "</option>").join("") + "</select></label>";
+      const syllabus = '<section class="card md-only"><p class="kicker">Syllabus</p><p class="muted">' +
+        state.doneLessons.length + " of " + D.lessons.length + " complete</p><div class=\"lesson-list\">" +
+        tracks.map(t => "<p class=\"muted\" style=\"font-size:.75rem;margin:1rem 0 .25rem\">" + D.trackLabel[t] + "</p>" +
+          D.lessons.filter(l => l.track === t).map(l => {
+            const i = D.lessons.indexOf(l);
+            return '<button type="button" class="' + (i === state.lessonIndex ? "on" : "") + '" data-act="set-lesson" data-i="' + i + '">' + esc(l.title) + "</button>";
+          }).join("")).join("") + "</div></section>";
+      const reader = '<article class="card"><p class="kicker">' + (state.lessonIndex + 1) + " / " + D.lessons.length +
+        " · " + D.trackLabel[lesson.track] + "</p><h1 class=\"page-h\">" + esc(lesson.title) + "</h1>" +
+        '<p class="lead">' + esc(lesson.lead) + "</p>" +
+        (lesson.formula ? '<p class="formula">' + esc(lesson.formula) + "</p>" : "") +
+        lesson.blocks.map(b => "<section style=\"margin-top:1.25rem\"><h3 style=\"font-size:.9rem;" +
+          (b.kind === "safety" ? "color:var(--danger)" : b.kind === "memory" ? "color:var(--accent)" : "") +
+          '">' + esc(b.title) + '</h3><p>' + esc(b.body) + "</p></section>").join("") +
+        '<p class="muted" style="margin-top:1.5rem">' + esc(lesson.locator) + "</p>" +
+        (related.length ? '<div style="margin-top:1.25rem;background:var(--bg);border-radius:1rem;padding:1rem;box-shadow:var(--shadow)"><p><b>Practice this lesson</b></p><ul class="muted">' +
+          related.map(q => "<li>" + esc(q.stem) + "</li>").join("") +
+          '</ul><button class="btn sec" style="margin-top:.75rem" data-act="practice-lesson" data-id="' + lesson.id + '">Start ' + related.length + " questions</button></div>" : "") +
+        '<div class="row" style="margin-top:1.25rem">' +
+        '<button class="btn sec" data-act="prev-lesson">Previous</button>' +
+        '<button class="btn" data-act="next-lesson">Next lesson</button>' +
+        '<button class="btn sec" data-act="toggle-done" data-id="' + lesson.id + '">' + (done ? "Completed" : "Mark complete") + "</button></div></article>";
+      return '<div class="split">' + sel + syllabus + reader + "</div>";
+    }
+
+    function practice() {
+      const b = bank();
+      const q = b.find(x => x.id === state.qId) || b[0];
+      if (!q) {
+        return '<div class="card"><h1>Nothing in this queue</h1><p class="muted">Wrong answers collect here after you check them.</p>' +
+          '<button class="btn" data-act="filter" data-id="all">Back to all</button></div>';
+      }
+      const pos = b.indexOf(q);
+      const filters = [
+        ["all", "All"],
+        ["missed", "Missed " + state.missed.length],
+        ["flagged", "Flagged " + state.flagged.length],
+        ["electrical", "Electrical"],
+        ["refrigeration", "Refrigeration"],
+        ["code", "Code"],
+        ["exam", "Exam"],
+      ];
+      const lessonName = state.practiceLessonId ? (D.lessons.find(l => l.id === state.practiceLessonId) || {}).title : "Question bank";
+      return '<div class="space"><div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-end">' +
+        "<div><p class=\"kicker\">Practice</p><h1 class=\"page-h\">" + esc(lessonName) + '</h1><p class="muted">' +
+        state.correct + " of " + state.answered + " correct · not PSI items</p></div>" +
+        '<p class="muted">' + (pos + 1) + " / " + b.length + "</p></div>" +
+        '<div class="chips">' + filters.map(([id, label]) =>
+          '<button class="chip' + (!state.practiceLessonId && state.practiceFilter === id ? " on" : "") + '" data-act="filter" data-id="' + id + '">' + label + "</button>"
+        ).join("") + "</div>" +
+        (state.practiceLessonId ? '<div class="card" style="display:flex;justify-content:space-between;align-items:center"><span>Only questions from this lesson.</span><button class="btn sec" data-act="clear-lesson">Show all</button></div>' : "") +
+        '<section class="card"><p class="muted">' + esc(q.skill) + '</p><p style="font-size:1.15rem;font-weight:500">' + esc(q.stem) + "</p>" +
+        '<div style="margin-top:1rem;display:grid;gap:.5rem">' + q.choices.map((c, i) => {
+          let cls = "choice";
+          if (state.checked && i === q.answer) cls += " good";
+          else if (state.checked && state.pick === i) cls += " bad";
+          else if (state.pick === i) cls += " picked";
+          return '<button class="' + cls + '" data-act="pick" data-i="' + i + '"' + (state.checked ? " disabled" : "") + '><span class="ltr">' + letter(i) + "</span><span>" + esc(c) + "</span></button>";
+        }).join("") + "</div>" +
+        '<div class="row" style="margin-top:1rem">' +
+        '<button class="btn sec" data-act="help">Hint</button>' +
+        '<button class="btn sec" data-act="study-q" data-id="' + q.lesson + '">Study lesson</button>' +
+        (state.checked
+          ? '<button class="btn" data-act="next-q">Next</button>'
+          : '<button class="btn" data-act="check"' + (state.pick == null ? " disabled" : "") + ">Check</button>") +
+        "</div>" +
+        (helpOn ? '<p class="muted" style="margin-top:1rem"><b>Hint.</b> ' + esc(q.help) + "</p>" : "") +
+        (state.checked ? '<p class="' + (state.pick === q.answer ? "ok" : "no") + '" style="margin-top:1rem"><b>' +
+          (state.pick === q.answer ? "Correct. " : "Not yet. ") + "</b>" + esc(q.why) + "</p>" : "") +
+        "</section></div>";
+    }
+
+    function examView() {
+      if (!exam.running && !exam.result) {
+        return '<div class="space"><div><p class="kicker">Exam Lab</p><h1 class="page-h">Timed drill, not the PSI exam</h1>' +
+          '<p class="lead">' + D.EXAM_COUNT + " original questions. " + (D.EXAM_SECONDS / 60) + " minutes. No hints while the clock runs.</p></div>" +
+          '<section class="card"><div class="stats">' +
+          stat("Items", String(D.EXAM_COUNT)) + stat("Clock", (D.EXAM_SECONDS / 60) + " min") +
+          stat("Last run", state.lastExamTotal != null ? state.lastExamRight + "/" + state.lastExamTotal : "—") +
+          '</div><ul class="muted"><li>Tap an item number to jump.</li><li>70% is the real exam pass mark. This drill is practice only.</li></ul>' +
+          '<button class="btn" style="margin-top:1.25rem" data-act="start-exam">Start timed run</button></section></div>';
+      }
+      if (exam.result && !exam.running) {
+        const pct = Math.round((exam.result.right / exam.result.total) * 100);
+        return '<div class="space"><p class="kicker">Exam Lab</p><h1 class="page-h">Drill complete</h1>' +
+          '<section class="card"><h2>' + exam.result.right + " / " + exam.result.total + '</h2><p class="muted">' +
+          pct + "% on this drill. Real exam pass mark is 70%.</p></section>" +
+          '<div class="res">' + exam.setQ.map((item, i) => {
+            const ok = exam.picks[i] === item.answer;
+            return "<div style=\"padding:1rem 1.25rem;border-bottom:1px solid #d5cdc0\"><div style=\"display:flex;justify-content:space-between;gap:.5rem\"><b>" +
+              esc(item.stem) + "</b><span class=\"muted\">" + (ok ? "Correct" : "Missed") + "</span></div>" +
+              '<p class="muted">' + esc(item.why) + "</p></div>";
+          }).join("") + "</div>" +
+          '<button class="btn" data-act="start-exam">Run again</button></div>';
+      }
+      const q = exam.setQ[exam.idx];
+      const answered = exam.picks.filter(p => p != null).length;
+      return '<div class="space"><div style="display:flex;justify-content:space-between;align-items:flex-end">' +
+        '<div><p class="kicker">Exam Lab</p><p class="timer">' + fmt(exam.left) + "</p></div>" +
+        '<p class="muted">' + answered + " / " + exam.setQ.length + " answered</p></div>" +
+        meter(answered, exam.setQ.length) +
+        '<div class="pills">' + exam.setQ.map((_, i) =>
+          '<button class="' + (i === exam.idx ? "on" : exam.picks[i] != null ? "mark" : "") + '" data-act="exam-idx" data-i="' + i + '">' + (i + 1) + "</button>"
+        ).join("") + "</div>" +
+        '<section class="card"><p class="muted">Item ' + (exam.idx + 1) + " · " + esc(q.skill) + '</p>' +
+        '<p style="font-size:1.15rem;font-weight:500">' + esc(q.stem) + "</p>" +
+        '<div style="margin-top:1rem;display:grid;gap:.5rem">' + q.choices.map((c, i) =>
+          '<button class="choice' + (exam.picks[exam.idx] === i ? " picked" : "") + '" data-act="exam-pick" data-i="' + i + '"><span class="ltr">' + letter(i) + "</span><span>" + esc(c) + "</span></button>"
+        ).join("") + "</div>" +
+        '<div class="row" style="margin-top:1rem">' +
+        '<button class="btn sec" data-act="exam-back"' + (exam.idx === 0 ? " disabled" : "") + ">Back</button>" +
+        '<button class="btn" data-act="exam-next">' + (exam.idx >= exam.setQ.length - 1 ? "Finish" : "Next") + "</button>" +
+        '<button class="btn sec" data-act="exam-stop">Stop and score</button></div></section></div>';
+    }
+
+    function esc(s) {
+      return String(s == null ? "" : s)
+        .replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">").replace(/"/g, """);
+    }
+
+    function render() {
+      renderNav();
+      const root = document.getElementById("root");
+      root.innerHTML = state.view === "library" ? library()
+        : state.view === "learn" ? learn()
+        : state.view === "practice" ? practice()
+        : state.view === "exam" ? examView()
+        : home();
+    }
+
+    function finishExam() {
+      exam.running = false;
+      if (examTimer) { clearInterval(examTimer); examTimer = null; }
+      const right = exam.setQ.filter((q, i) => exam.picks[i] === q.answer).length;
+      exam.result = { right, total: exam.setQ.length };
+      state.lastExamRight = right;
+      state.lastExamTotal = exam.setQ.length;
+      save();
+      render();
+    }
+
+    function startExam() {
+      exam.setQ = shuffle(D.questions).slice(0, D.EXAM_COUNT);
+      exam.picks = Array(exam.setQ.length).fill(null);
+      exam.idx = 0;
+      exam.left = D.EXAM_SECONDS;
+      exam.result = null;
+      exam.running = true;
+      if (examTimer) clearInterval(examTimer);
+      examTimer = setInterval(() => {
+        exam.left = Math.max(0, exam.left - 1);
+        if (exam.left === 0) finishExam();
+        else if (state.view === "exam") render();
+      }, 1000);
+      render();
+    }
+
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-view], [data-act]");
+      if (!t) return;
+      if (t.dataset.view) { state.view = t.dataset.view; save(); render(); return; }
+      const act = t.dataset.act;
+      if (act === "open-lesson") {
+        state.lessonIndex = Number(t.dataset.i); state.view = "learn"; save(); render();
+      } else if (act === "set-lesson") {
+        state.lessonIndex = Number(t.dataset.i); save(); render();
+      } else if (act === "prev-lesson") {
+        state.lessonIndex = (state.lessonIndex + D.lessons.length - 1) % D.lessons.length; save(); render();
+      } else if (act === "next-lesson") {
+        const cur = D.lessons[state.lessonIndex];
+        if (cur && !state.doneLessons.includes(cur.id)) state.doneLessons.push(cur.id);
+        state.lessonIndex = (state.lessonIndex + 1) % D.lessons.length; save(); render();
+      } else if (act === "toggle-done") {
+        const id = t.dataset.id;
+        state.doneLessons = state.doneLessons.includes(id) ? state.doneLessons.filter(x => x !== id) : state.doneLessons.concat(id);
+        save(); render();
+      } else if (act === "practice-lesson") {
+        const related = D.questions.filter(q => q.lesson === t.dataset.id);
+        state.practiceLessonId = t.dataset.id;
+        state.qId = related[0] ? related[0].id : state.qId;
+        state.pick = null; state.checked = false; helpOn = false;
+        state.view = "practice"; save(); render();
+      } else if (act === "filter") {
+        state.practiceFilter = t.dataset.id; state.practiceLessonId = null;
+        state.pick = null; state.checked = false; helpOn = false; save(); render();
+      } else if (act === "clear-lesson") {
+        state.practiceLessonId = null; save(); render();
+      } else if (act === "pick") {
+        if (!state.checked) { state.pick = Number(t.dataset.i); save(); render(); }
+      } else if (act === "check") {
+        const bnk = bank();
+        const q = bnk.find(x => x.id === state.qId) || bnk[0];
+        if (!q || state.pick == null || state.checked) return;
+        const ok = state.pick === q.answer;
+        state.checked = true; state.answered += 1; if (ok) state.correct += 1;
+        if (ok) state.missed = state.missed.filter(id => id !== q.id);
+        else if (!state.missed.includes(q.id)) state.missed.push(q.id);
+        save(); render();
+      } else if (act === "next-q") {
+        const bnk = bank();
+        const q = bnk.find(x => x.id === state.qId) || bnk[0];
+        const pos = bnk.indexOf(q);
+        const next = bnk[(pos + 1) % bnk.length];
+        if (next) { state.qId = next.id; state.pick = null; state.checked = false; helpOn = false; save(); render(); }
+      } else if (act === "help") {
+        helpOn = true; render();
+      } else if (act === "study-q") {
+        state.lessonIndex = D.lessons.findIndex(l => l.id === t.dataset.id);
+        if (state.lessonIndex < 0) state.lessonIndex = 0;
+        state.view = "learn"; save(); render();
+      } else if (act === "start-exam") {
+        startExam();
+      } else if (act === "exam-idx") {
+        exam.idx = Number(t.dataset.i); render();
+      } else if (act === "exam-pick") {
+        exam.picks[exam.idx] = Number(t.dataset.i); render();
+      } else if (act === "exam-back") {
+        exam.idx = Math.max(0, exam.idx - 1); render();
+      } else if (act === "exam-next") {
+        if (exam.idx >= exam.setQ.length - 1) finishExam();
+        else { exam.idx += 1; render(); }
+      } else if (act === "exam-stop") {
+        finishExam();
+      }
+    });
+    document.addEventListener("change", (e) => {
+      if (e.target.id === "lesson-select") {
+        state.lessonIndex = Number(e.target.value); save(); render();
+      }
+    });
+    render();
+  </script>
 </body>
 </html>
